@@ -1,7 +1,8 @@
 // (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
 
-using UnityEngine;
 using Meta.XR.MRUtilityKit;
+using UnityEngine;
+
 
 namespace Meta.XR.TrackedKeyboardSample
 {
@@ -15,11 +16,13 @@ namespace Meta.XR.TrackedKeyboardSample
         private GameObject _visualInstance;
         private Material _material;
 
+
         public override void Initialize(Bounded2DVisualizer visualizer, OVRPassthroughLayer passthroughLayer, MRUKTrackable trackable)
         {
             if (_quadPrefab == null)
             {
                 Debug.LogError("Quad prefab not assigned!");
+
                 return;
             }
 
@@ -32,6 +35,7 @@ namespace Meta.XR.TrackedKeyboardSample
                       $"Scale: {_visualInstance.transform.localScale}");
         }
 
+
         public override void UpdateVisual(Bounded2DVisualizer visualizer)
         {
             if (_material != null)
@@ -40,6 +44,7 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         public override void UpdateVisibility(Bounded2DVisualizer visualizer, bool enable)
         {
             if (_visualInstance != null)
@@ -47,6 +52,7 @@ namespace Meta.XR.TrackedKeyboardSample
                 _visualInstance.SetActive(enable);
             }
         }
+
 
         private void CreateVisualFromPrefab(Transform parent, MRUKTrackable trackable)
         {
@@ -66,6 +72,7 @@ namespace Meta.XR.TrackedKeyboardSample
 
             // Cache the material if needed for color updates
             var renderer = _visualInstance.GetComponent<MeshRenderer>();
+
             if (renderer != null)
             {
                 _material = renderer.material;
@@ -75,23 +82,30 @@ namespace Meta.XR.TrackedKeyboardSample
             _visualInstance.SetActive(true);
         }
 
+
         private void CleanupVisual()
         {
             if (_visualInstance != null)
             {
                 if (Application.isPlaying)
+                {
                     Destroy(_visualInstance);
+                }
                 else
+                {
                     DestroyImmediate(_visualInstance);
+                }
             }
         }
+
 
         private void OnDestroy()
         {
             CleanupVisual();
         }
 
-#if UNITY_EDITOR
+
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             if (_material != null)
@@ -99,6 +113,6 @@ namespace Meta.XR.TrackedKeyboardSample
                 _material.SetColor("_Color", _tintColor);
             }
         }
-#endif
+        #endif
     }
 }

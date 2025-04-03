@@ -1,23 +1,25 @@
 // (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
 
-using System;
 using System.Collections;
 using UnityEngine;
+
 
 namespace Meta.XR.TrackedKeyboardSample
 {
     /// <summary>
-    /// Manages the visibility of the Android soft keyboard.
+    ///     Manages the visibility of the Android soft keyboard.
     /// </summary>
     public class KeyboardVisibility : MonoBehaviour
     {
         private Coroutine _hideKeyboardCoroutine;
         private bool _isTrackingSupported;
 
+
         private void Start()
         {
             _isTrackingSupported = OVRAnchor.TrackerConfiguration.KeyboardTrackingSupported;
         }
+
 
         private void OnDisable()
         {
@@ -28,6 +30,7 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         private void LateUpdate()
         {
             if (_isTrackingSupported && TouchScreenKeyboard.visible && _hideKeyboardCoroutine == null)
@@ -36,8 +39,9 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         /// <summary>
-        /// Coroutine to hide the keyboard after the current frame.
+        ///     Coroutine to hide the keyboard after the current frame.
         /// </summary>
         /// <returns>IEnumerator for the coroutine.</returns>
         private IEnumerator HideKeyboardAfterLateUpdate()
@@ -45,18 +49,21 @@ namespace Meta.XR.TrackedKeyboardSample
             yield return new WaitForEndOfFrame();
 
             if (!isActiveAndEnabled)
+            {
                 yield break;
+            }
 
             HideKeyboard();
             _hideKeyboardCoroutine = null;
         }
 
+
         /// <summary>
-        /// Hides the Android soft keyboard.
+        ///     Hides the Android soft keyboard.
         /// </summary>
         private void HideKeyboard()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
+            #if UNITY_ANDROID && !UNITY_EDITOR
             try
             {
                 using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
@@ -82,7 +89,7 @@ namespace Meta.XR.TrackedKeyboardSample
             {
                 Debug.LogError($"Failed to hide keyboard: {e.Message}");
             }
-#endif
+            #endif
         }
     }
 }

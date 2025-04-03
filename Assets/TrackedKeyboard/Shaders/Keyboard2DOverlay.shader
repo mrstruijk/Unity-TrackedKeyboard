@@ -4,17 +4,19 @@ Shader "TrackedKeyboard/Keyboard2DOverlay"
 {
     Properties
     {
-         _TintColor ("Color", Color) = (1, 1, 1, 1)
-         _FrameColor ("Frame Color", Color) = (1, 1, 1, 1)
-         _OutlineRadius ("Radius", Range(0, 1)) = 0.1
-         _OutlineSize ("Stroke", Range(-0.1, 10)) = 0.05
-         _Alpha ("Alpha", Range(0,1)) = 0.8
+        _TintColor ("Color", Color) = (1, 1, 1, 1)
+        _FrameColor ("Frame Color", Color) = (1, 1, 1, 1)
+        _OutlineRadius ("Radius", Range(0, 1)) = 0.1
+        _OutlineSize ("Stroke", Range(-0.1, 10)) = 0.05
+        _Alpha ("Alpha", Range(0,1)) = 0.8
     }
 
     SubShader
     {
         Tags
-        { "RenderType" = "Transparent" "Queue" = "Transparent" "IgnoreProjector" = "True" }
+        {
+            "RenderType" = "Transparent" "Queue" = "Transparent" "IgnoreProjector" = "True"
+        }
 
         Cull Off
         Blend SrcAlpha OneMinusSrcAlpha, One One
@@ -47,7 +49,7 @@ Shader "TrackedKeyboard/Keyboard2DOverlay"
 
             float4 _TintColor;
             float4 _FrameColor;
-            float  _OutlineSize;
+            float _OutlineSize;
             float _OutlineRadius;
             float _Alpha;
 
@@ -89,7 +91,7 @@ Shader "TrackedKeyboard/Keyboard2DOverlay"
                 float4 col = lerp(_TintColor, _FrameColor, aaStep(frame));
                 // feather fade near edges
                 float feather = 0.02f;
-                float alphaFade = smoothstep(feather,-feather, box);
+                float alphaFade = smoothstep(feather, -feather, box);
                 col.a *= alphaFade;
 
                 return float4(col.rgb, saturate(col.a * body * _Alpha));

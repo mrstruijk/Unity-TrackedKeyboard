@@ -5,46 +5,47 @@ using System.Collections.Generic;
 using Meta.XR.MRUtilityKit;
 using UnityEngine;
 
+
 namespace Meta.XR.TrackedKeyboardSample
 {
     /// <summary>
-    /// Visualizes the bounded 3D area for the tracked keyboard.
+    ///     Visualizes the bounded 3D area for the tracked keyboard.
     /// </summary>
     public class Bounded2DVisualizer : MonoBehaviour
     {
-
         [SerializeField]
         private Area2DBoundaryVisual _2DVisual;
-        [SerializeField, Tooltip("Boundary visual implementation.")]
+        [SerializeField] [Tooltip("Boundary visual implementation.")]
         private BoundaryVisual _boundaryVisual;
-        [SerializeField, Tooltip("Transform to apply the keyboard's position and scale.")]
+        [SerializeField] [Tooltip("Transform to apply the keyboard's position and scale.")]
         private Transform _boxTransform;
-        [SerializeField, Tooltip("Line renderer for visualizing boundaries.")]
+        [SerializeField] [Tooltip("Line renderer for visualizing boundaries.")]
         private LineRenderer _lineRenderer;
-        [SerializeField, Range(1f, 1.5f), Tooltip("Scaling factor for the trackable box colliders X axis. This defines the hand detection range and does not need to be changed in most cases.")]
+        [SerializeField] [Range(1f, 1.5f)] [Tooltip("Scaling factor for the trackable box colliders X axis. This defines the hand detection range and does not need to be changed in most cases.")]
         private float _colliderScaleX = 1.2f;
-        [SerializeField, Range(2f, 4f), Tooltip("Scaling factor for the trackable box colliders Z axis. This defines the hand detection range and does not need to be changed in most cases.")]
+        [SerializeField] [Range(2f, 4f)] [Tooltip("Scaling factor for the trackable box colliders Z axis. This defines the hand detection range and does not need to be changed in most cases.")]
         private float _colliderScaleZ = 3f;
 
-        [SerializeField, Range(1f, 1.3f), Tooltip("Scaling factor for the passthrough cutout width (X axis)")]
+        [SerializeField] [Range(1f, 1.3f)] [Tooltip("Scaling factor for the passthrough cutout width (X axis)")]
         private float _passthroughScaleX = 1.05f;
-        [SerializeField, Range(1f, 1.3f), Tooltip("Scaling factor for the passthrough cutout height (Y axis)")]
+        [SerializeField] [Range(1f, 1.3f)] [Tooltip("Scaling factor for the passthrough cutout height (Y axis)")]
         private float _passthroughScaleY = 1.05f;
-        [SerializeField, Range(1f, 1.2f), Tooltip("Scaling factor for the passthrough cutout depth (Z axis)")]
+        [SerializeField] [Range(1f, 1.2f)] [Tooltip("Scaling factor for the passthrough cutout depth (Z axis)")]
         private float _passthroughScaleZ = 1.05f;
-
-        public LineRenderer LineRenderer => _lineRenderer;
-        public BoxCollider BoxCollider => _boxCollider;
+        private readonly HashSet<string> _logOnce = new();
 
         private MRUKTrackable _trackable;
         private OVRPassthroughLayer _passthroughLayer;
-        private readonly HashSet<string> _logOnce = new HashSet<string>();
         private bool _isBoundaryVisualEnabled = true;
         private bool _isHoverActive = false;
         private BoxCollider _boxCollider;
 
+        public LineRenderer LineRenderer => _lineRenderer;
+        public BoxCollider BoxCollider => _boxCollider;
+
+
         /// <summary>
-        /// Logs a message only once.
+        ///     Logs a message only once.
         /// </summary>
         /// <param name="msg">The message to log.</param>
         private void LogOnce(string msg)
@@ -54,6 +55,7 @@ namespace Meta.XR.TrackedKeyboardSample
                 Debug.Log(msg);
             }
         }
+
 
         private void Update()
         {
@@ -70,8 +72,9 @@ namespace Meta.XR.TrackedKeyboardSample
             _boundaryVisual?.UpdateVisual(this);
         }
 
+
         /// <summary>
-        /// Initializes the visualizer with the given passthrough layer and trackable.
+        ///     Initializes the visualizer with the given passthrough layer and trackable.
         /// </summary>
         /// <param name="passthroughLayer">The passthrough layer to use.</param>
         /// <param name="trackable">The MRUKTrackable to visualize.</param>
@@ -79,7 +82,9 @@ namespace Meta.XR.TrackedKeyboardSample
         public void Initialize(OVRPassthroughLayer passthroughLayer, MRUKTrackable trackable, BoundaryVisual boundaryVisual)
         {
             if (trackable == null)
+            {
                 throw new ArgumentNullException(nameof(trackable));
+            }
 
             _passthroughLayer = passthroughLayer;
             _trackable = trackable;
@@ -88,6 +93,7 @@ namespace Meta.XR.TrackedKeyboardSample
             if (!_trackable.VolumeBounds.HasValue)
             {
                 LogOnce($"Trackable {_trackable} has no Bounded3D component. Ignoring.");
+
                 return;
             }
 
@@ -95,9 +101,11 @@ namespace Meta.XR.TrackedKeyboardSample
             LogOnce($"Bounded3D volume: {box}");
 
             _boxCollider = GetComponent<BoxCollider>();
+
             if (_boxCollider == null)
             {
                 Debug.LogWarning("BoxCollider component is missing on Bounded3DVisualizer.");
+
                 return;
             }
 
@@ -108,15 +116,16 @@ namespace Meta.XR.TrackedKeyboardSample
 
             if (_boxTransform != null)
             {
-                Vector3 passthroughScale = new Vector3(
-                    box.size.x * (_passthroughScaleX),
-                    box.size.y * (_passthroughScaleY),
-                    box.size.z * (_passthroughScaleZ)
+                var passthroughScale = new Vector3(
+                    box.size.x * _passthroughScaleX,
+                    box.size.y * _passthroughScaleY,
+                    box.size.z * _passthroughScaleZ
                 );
 
                 _boxTransform.localScale = passthroughScale;
 
                 var meshFilter = _boxTransform.GetComponentInChildren<MeshFilter>();
+
                 if (meshFilter)
                 {
                     _passthroughLayer.AddSurfaceGeometry(meshFilter.gameObject, true);
@@ -132,8 +141,9 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         /// <summary>
-        /// Called by UI button to explicitly enable/disable the boundary.
+        ///     Called by UI button to explicitly enable/disable the boundary.
         /// </summary>
         /// <param name="enable"></param>
         public void SetUserEnabled(bool enable)
@@ -142,9 +152,10 @@ namespace Meta.XR.TrackedKeyboardSample
             UpdateVisibility();
         }
 
+
         /// <summary>
-        /// Called by hover detection events to show/hide based on hand proximity.
-        /// Show the boundary when not hovering and button is enabled.
+        ///     Called by hover detection events to show/hide based on hand proximity.
+        ///     Show the boundary when not hovering and button is enabled.
         /// </summary>
         /// <param name="isHovering"></param>
         public void SetHoverState(bool isHovering)
@@ -157,12 +168,13 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         /// <summary>
-        /// Show the boundary visual if button is enabled, and user is not hovering.
+        ///     Show the boundary visual if button is enabled, and user is not hovering.
         /// </summary>
         private void UpdateVisibility()
         {
-            bool shouldShow = _isBoundaryVisualEnabled && !_isHoverActive;
+            var shouldShow = _isBoundaryVisualEnabled && !_isHoverActive;
             _2DVisual?.UpdateVisibility(this, shouldShow);
         }
     }

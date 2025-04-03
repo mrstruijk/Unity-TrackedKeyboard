@@ -10,7 +10,10 @@ Shader "TrackedKeyboard/KeyboardSelectivePassthrough"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" "IgnoreProjector"="True"}
+        Tags
+        {
+            "RenderType"="Transparent" "Queue"="Transparent" "IgnoreProjector"="True"
+        }
         LOD 100
 
         Pass
@@ -19,7 +22,6 @@ Shader "TrackedKeyboard/KeyboardSelectivePassthrough"
             Blend SrcAlpha OneMinusSrcAlpha, One One
 
             CGPROGRAM
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -56,7 +58,8 @@ Shader "TrackedKeyboard/KeyboardSelectivePassthrough"
                 return o;
             }
 
-            fixed4 frag(v2f i) : SV_Target {
+            fixed4 frag(v2f i) : SV_Target
+            {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 float alpha = lerp(col.r, 1 - col.r, _InvertedAlpha);
                 return float4(0, 0, 0, alpha);
