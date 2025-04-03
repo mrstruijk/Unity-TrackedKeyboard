@@ -36,8 +36,10 @@ namespace Meta.XR.TrackedKeyboardSample
         [SerializeField] [Tooltip("Boundary visualizer implementation.")]
         private BoundaryVisual _boundaryVisualImplementation;
 
-        [SerializeField] [Tooltip("Toggle button to show/hide the passive keyboard visual")]
+        [SerializeField] [Tooltip("Toggle button to show/hide the passive keyboard visual")] [Optional]
         private Toggle _passiveVisualToggle;
+        [Tooltip("SOSXR")] 
+        [SerializeField] private bool m_passiveVisualToggleDefault = true;
 
         [SerializeField]
         private Transform _deskTransform;
@@ -120,7 +122,7 @@ namespace Meta.XR.TrackedKeyboardSample
             {
                 // Initialize with the selected BoundaryVisual implementation
                 _boundaryVisualizer.Initialize(_passthroughOverlay, trackable, _boundaryVisualImplementation);
-                ToggleBoundaryVisual(_passiveVisualToggle.isOn);
+                VisualizeBoundary();
             }
             else
             {
@@ -151,6 +153,20 @@ namespace Meta.XR.TrackedKeyboardSample
                 _deskTransform.position = new Vector3(_deskTransform.position.x, deskHeight,
                     _deskTransform.position.z);
             }
+        }
+
+/// <summary>
+/// SOSXR: This is needed because I was removing the UI Toggle from the scene, and I cannot have it so that it is a requirement.
+/// </summary>
+        private void VisualizeBoundary()
+        {
+            var toggle = m_passiveVisualToggleDefault;
+
+            if (_passiveVisualToggle != null)
+            {
+                toggle = _passiveVisualToggle.isOn;
+            }
+            ToggleBoundaryVisual(toggle);
         }
 
 

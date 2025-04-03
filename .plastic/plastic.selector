@@ -1,0 +1,4 @@
+repository "GTKSample@mrstruijk@cloud"
+  path "/"
+    br "/main"
+    co "/main"
