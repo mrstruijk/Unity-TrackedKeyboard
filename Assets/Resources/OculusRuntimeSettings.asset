@@ -17,6 +17,6 @@ MonoBehaviour:
   requestsVisualFaceTracking: 1
   requestsAudioFaceTracking: 1
   enableFaceTrackingVisemesOutput: 0
-  telemetryProjectGuid: c084c4a3-1b7d-4aa2-8427-e9866456bf58
+  telemetryProjectGuid: f6147fed-06d1-4a1d-9d8f-390750d30839
   bodyTrackingFidelity: 1
   bodyTrackingJointSet: 0
