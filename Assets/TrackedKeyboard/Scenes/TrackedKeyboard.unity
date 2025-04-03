@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1283913719}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4419,6 +4419,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267293730}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!108 &1283913719 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2527799970706940549, guid: 2dc2203033bd0d543af363b1e40a1317, type: 3}
+  m_PrefabInstance: {fileID: 612123914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1311486551
 GameObject:
   m_ObjectHideFlags: 0
