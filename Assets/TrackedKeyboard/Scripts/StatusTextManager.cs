@@ -1,5 +1,6 @@
 // (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
 
+using Oculus.Interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
@@ -9,8 +10,21 @@ namespace Meta.XR.TrackedKeyboardSample
 {
     public class StatusTextManager : MonoBehaviour
     {
+        [Optional]
         [SerializeField] private TextMeshProUGUI _supportText;
         [SerializeField] private TrackedKeyboardManager _keyboardManager;
+
+
+        private void Awake()
+        {
+            if (_keyboardManager != null)
+            {
+                return;
+            }
+
+            Debug.Log("SOSXR: The _supportText is missing. Will now disable this component");
+            enabled = false;
+        }
 
 
         private void Start()
