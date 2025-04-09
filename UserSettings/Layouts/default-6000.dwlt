@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 519
     height: 565
-  m_MinSize: {x: 600, y: 350}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 602, y: 376}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 64
+    y: 24
     width: 1315
     height: 765
   m_SerializedDataModeController:
@@ -1205,11 +1205,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.0026888456, y: 0.03509068, z: 0.000094194555, w: -0.99938345}
     speed: 2
-    m_Value: {x: 0.002688838, y: 0.03509058, z: 0.000094194285, w: -0.9993806}
+    m_Value: {x: 0.0026888456, y: 0.03509068, z: 0.000094194555, w: -0.99938345}
   m_Size:
     m_Target: 0.7845902
     speed: 2
-    m_Value: 0.67607945
+    m_Value: 0.7845902
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1301,8 +1301,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Unity Version Control\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 797
-    y: 855
+    x: 798
+    y: 24
     width: 517
     height: 539
   m_SerializedDataModeController:
@@ -1547,7 +1547,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 855
+    y: 24
     width: 796
     height: 539
   m_SerializedDataModeController:
@@ -1591,7 +1591,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: fee70000
     m_LastClickedID: 59390
-    m_ExpandedIDs: 0000000020cf000022cf000024cf000026cf000028cf00002acf00002ccf00002ecf000030cf000032cf000034cf000036cf000038cf00003acf00003ccf00003ecf000040cf000042cf0000320601003406010036060100380601006406010000ca9a3b
+    m_ExpandedIDs: 000000001ecf000020cf000022cf000024cf000026cf000028cf00002acf00002ccf00002ecf000030cf000032cf000034cf000036cf000038cf00003acf00003ccf00003ecf000040cf000042cf000044cf000046cf000048cf0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1620,7 +1620,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000020cf000022cf000024cf000026cf000028cf00002acf00002ccf00002ecf000030cf000032cf000034cf000036cf000038cf00003acf00003ccf00003ecf000040cf000042cf0000
+    m_ExpandedIDs: 000000001ecf000020cf000022cf000024cf000026cf000028cf00002acf00002ccf00002ecf000030cf000032cf000034cf000036cf000038cf00003acf00003ccf00003ecf000040cf000042cf000044cf000046cf000048cf0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1744,8 +1744,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1316
-    y: 64
+    x: 1
+    y: 24
     width: 570
     height: 843
   m_SerializedDataModeController:
@@ -1810,8 +1810,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1888
-    y: 64
+    x: 573
+    y: 24
     width: 671
     height: 843
   m_SerializedDataModeController:
@@ -1859,8 +1859,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1316
-    y: 933
+    x: 1
+    y: 893
     width: 1243
     height: 461
   m_SerializedDataModeController:
