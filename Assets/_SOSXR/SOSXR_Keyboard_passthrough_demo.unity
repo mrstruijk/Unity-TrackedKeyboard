@@ -2670,17 +2670,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395358698}
   m_CullTransparentMesh: 1
---- !u!114 &1414885520 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6317964556682436882, guid: ea16c3c8c1688234fa81a4f39339bf1b, type: 3}
-  m_PrefabInstance: {fileID: 2008981161}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e48d93b64a9ae4f9fd5a728c8f51af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1421547813 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4369967455335210858, guid: ea16c3c8c1688234fa81a4f39339bf1b, type: 3}
@@ -2797,9 +2786,7 @@ MonoBehaviour:
     m_Bits: 1
   _sphereRadius: 0.2
   _castDistance: 7
-  _handMaterialPropertyBlocks:
-  - {fileID: 1414885520}
-  - {fileID: 1890789168}
+  _handMaterialPropertyBlocks: []
   _opacity: 1
   _outlineOpacity: 1
   _animationSpeed: 0
@@ -2950,17 +2937,6 @@ MonoBehaviour:
   _materialEditor: {fileID: 0}
   _glowColor: {r: 1, g: 1, b: 1, a: 0}
   _glowType: 18
---- !u!114 &1890789168 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6325584190776723257, guid: ea16c3c8c1688234fa81a4f39339bf1b, type: 3}
-  m_PrefabInstance: {fileID: 2008981161}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e48d93b64a9ae4f9fd5a728c8f51af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1901982159
 GameObject:
   m_ObjectHideFlags: 0
