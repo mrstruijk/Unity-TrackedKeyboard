@@ -1,7 +1,12 @@
 {
   "dependencies": {
+    "com.danieleverland.scriptableobjectarchitecture": "https://github.com/solo-fsw/sosxr-unity-scriptableobjectarchitecture.git#dev",
     "com.meta.xr.mrutilitykit": "74.0.2",
     "com.meta.xr.sdk.interaction.ovr": "74.0.3",
+    "com.sosxr.editorspice": "https://github.com/solo-fsw/sosxr-unity-editorspice.git#dev",
+    "com.sosxr.enhancedlogger": "https://github.com/solo-fsw/sosxr-unity-enhancedlogger.git#dev",
+    "com.sosxr.plet": "https://github.com/solo-fsw/sosxr-unity-plet.git#dev",
+    "com.sosxr.seashark": "https://github.com/solo-fsw/sosxr-unity-seashark.git#dev",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.development": "1.0.2",
     "com.unity.ide.rider": "3.0.36",
@@ -11,6 +16,7 @@
     "com.unity.visualscripting": "1.9.6",
     "com.unity.xr.management": "4.5.1",
     "com.unity.xr.openxr": "1.14.2",
+    "com.yasirkula.ingamedebugconsole": "https://github.com/solo-fsw/sosxr-unity-ingamedebugconsole.git#dev",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
