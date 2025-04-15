@@ -6,7 +6,9 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
+/_[Bb]uild/
 /[Bb]uilds/
+/_[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
