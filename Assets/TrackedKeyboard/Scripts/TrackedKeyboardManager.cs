@@ -1,41 +1,42 @@
 // (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
 
 using System.Collections;
-using UnityEngine;
 using Meta.XR.MRUtilityKit;
 using Oculus.Interaction;
+using UnityEngine;
 using UnityEngine.UI;
+
 
 namespace Meta.XR.TrackedKeyboardSample
 {
     /// <summary>
-    /// Controls the tracked keyboard behavior in mixed reality.
+    ///     Controls the tracked keyboard behavior in mixed reality.
     /// </summary>
     public sealed class TrackedKeyboardManager : MonoBehaviour
     {
         [Header("Prefabs and References")]
-        [SerializeField, Tooltip("Prefab for the tracked keyboard.")]
+        [SerializeField] [Tooltip("Prefab for the tracked keyboard.")]
         private GameObject _keyboardPrefab;
 
-        [SerializeField, Tooltip("Reference to the left hand GameObject.")]
+        [SerializeField] [Tooltip("Reference to the left hand GameObject.")]
         private GameObject _leftHand;
 
-        [SerializeField, Tooltip("Reference to the right hand GameObject.")]
+        [SerializeField] [Tooltip("Reference to the right hand GameObject.")]
         private GameObject _rightHand;
 
-        [SerializeField, Tooltip("Passthrough layer for underlay.")]
+        [SerializeField] [Tooltip("Passthrough layer for underlay.")]
         private OVRPassthroughLayer _passthroughUnderlay;
 
-        [SerializeField, Tooltip("Passthrough layer for overlay.")]
+        [SerializeField] [Tooltip("Passthrough layer for overlay.")]
         private OVRPassthroughLayer _passthroughOverlay;
 
         [Tooltip("Objects that shouldn't be rendered during passthrough")]
         [SerializeField] private GameObject[] _objects;
 
-        [SerializeField, Tooltip("Boundary visualizer implementation.")]
+        [SerializeField] [Tooltip("Boundary visualizer implementation.")]
         private BoundaryVisual _boundaryVisualImplementation;
 
-        [SerializeField, Tooltip("Toggle button to show/hide the passive keyboard visual")]
+        [SerializeField] [Tooltip("Toggle button to show/hide the passive keyboard visual")]
         private Toggle _passiveVisualToggle;
 
         [SerializeField]
@@ -51,18 +52,20 @@ namespace Meta.XR.TrackedKeyboardSample
         private Bounded2DVisualizer _boundaryVisualizer;
         private TouchScreenKeyboard _overlayKeyboard;
         private bool _isMRMode = false;
-        private float _deskHeightOffset = 0.015f;
+        private readonly float _deskHeightOffset = 0.015f;
         private bool _awaitingDialogueResponse = false;
 
         public MRUKTrackable Trackable { get; private set; }
+
 
         private void Awake()
         {
             InitializeHands();
         }
 
+
         /// <summary>
-        /// Initializes hand visuals and interactors.
+        ///     Initializes hand visuals and interactors.
         /// </summary>
         private void InitializeHands()
         {
@@ -89,18 +92,22 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         /// <summary>
-        /// Called when a trackable is added.
+        ///     Called when a trackable is added.
         /// </summary>
         /// <param name="trackable">The added MRUKTrackable.</param>
         public void OnTrackableAdded(MRUKTrackable trackable)
         {
             if (trackable.TrackableType != OVRAnchor.TrackableType.Keyboard)
+            {
                 return;
+            }
 
             if (_keyboardPrefab == null)
             {
                 Debug.LogError("Keyboard prefab is not assigned.");
+
                 return;
             }
 
@@ -108,6 +115,7 @@ namespace Meta.XR.TrackedKeyboardSample
             Trackable = trackable;
 
             _boundaryVisualizer = newGameObject.GetComponentInChildren<Bounded2DVisualizer>();
+
             if (_boundaryVisualizer != null)
             {
                 // Initialize with the selected BoundaryVisual implementation
@@ -120,6 +128,7 @@ namespace Meta.XR.TrackedKeyboardSample
             }
 
             _handDetector = newGameObject.GetComponentInChildren<KeyboardInteractionManager>();
+
             if (_handDetector != null)
             {
                 _handDetector.LeftHandVisual = _leftHandVisual;
@@ -137,29 +146,39 @@ namespace Meta.XR.TrackedKeyboardSample
 
             if (trackable.VolumeBounds != null)
             {
-                float deskHeight = trackable.transform.position.y - (_boundaryVisualizer.BoxCollider.size.z / 2f) - _deskHeightOffset;
+                var deskHeight = trackable.transform.position.y - _boundaryVisualizer.BoxCollider.size.z / 2f - _deskHeightOffset;
+
                 _deskTransform.position = new Vector3(_deskTransform.position.x, deskHeight,
                     _deskTransform.position.z);
             }
         }
 
+
         /// <summary>
-        /// Called when a trackable is removed.
+        ///     Called when a trackable is removed.
         /// </summary>
         /// <param name="trackable">The removed MRUKTrackable.</param>
         public void OnTrackableRemoved(MRUKTrackable trackable)
         {
             if (_leftHandVisual != null)
+            {
                 _leftHandVisual.ForceOffVisibility = false;
+            }
 
             if (_rightHandVisual != null)
+            {
                 _rightHandVisual.ForceOffVisibility = false;
+            }
 
             if (_leftRayInteractor != null)
+            {
                 _leftRayInteractor.enabled = true;
+            }
 
             if (_rightRayInteractor != null)
+            {
                 _rightRayInteractor.enabled = true;
+            }
 
             Trackable = null;
             _handDetector = null;
@@ -167,8 +186,9 @@ namespace Meta.XR.TrackedKeyboardSample
             Destroy(trackable.gameObject);
         }
 
+
         /// <summary>
-        /// Toggles the visibility of the keyboard boundary.
+        ///     Toggles the visibility of the keyboard boundary.
         /// </summary>
         /// <param name="visible">Whether the boundary should be visible.</param>
         public void ToggleBoundaryVisual(bool visible)
@@ -178,37 +198,47 @@ namespace Meta.XR.TrackedKeyboardSample
                 return;
             }
 
-            bool shouldShow = !_isMRMode && visible;
+            var shouldShow = !_isMRMode && visible;
             _boundaryVisualizer.SetUserEnabled(shouldShow);
         }
 
+
         /// <summary>
-        /// Toggles Mixed Reality mode.
+        ///     Toggles Mixed Reality mode.
         /// </summary>
         public void ToggleMrMode()
         {
             _isMRMode = !_isMRMode;
 
             if (_passthroughOverlay != null)
+            {
                 _passthroughOverlay.gameObject.SetActive(!_isMRMode);
+            }
 
             if (_passthroughUnderlay != null)
+            {
                 _passthroughUnderlay.gameObject.SetActive(_isMRMode);
+            }
 
             if (_boundaryVisualizer != null)
+            {
                 _boundaryVisualizer.SetUserEnabled(!_isMRMode);
+            }
 
             if (Camera.main != null)
+            {
                 Camera.main.clearFlags = _isMRMode ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+            }
 
-            foreach (GameObject obj in _objects)
+            foreach (var obj in _objects)
             {
                 obj.SetActive(!_isMRMode);
             }
         }
 
+
         /// <summary>
-        /// Launches the local keyboard selection dialog.
+        ///     Launches the local keyboard selection dialog.
         /// </summary>
         public void LaunchLocalKeyboardSelectionDialog()
         {
@@ -216,8 +246,9 @@ namespace Meta.XR.TrackedKeyboardSample
             _awaitingDialogueResponse = true;
         }
 
+
         /// <summary>
-        /// Checks the keyboard presence once the external dialogue is closed and the app regains focus.
+        ///     Checks the keyboard presence once the external dialogue is closed and the app regains focus.
         /// </summary>
         /// <param name="hasFocus"></param>
         private void OnApplicationFocus(bool hasFocus)
@@ -229,6 +260,7 @@ namespace Meta.XR.TrackedKeyboardSample
             }
         }
 
+
         private IEnumerator CheckKeyboardPresence()
         {
             yield return new WaitForSeconds(0.5f);
@@ -238,6 +270,7 @@ namespace Meta.XR.TrackedKeyboardSample
                 StartCoroutine(RefreshMRUKCoroutine());
             }
         }
+
 
         private bool HasActiveKeyboard()
         {
@@ -252,26 +285,29 @@ namespace Meta.XR.TrackedKeyboardSample
             return false;
         }
 
+
         /// <summary>
-        /// Forces a refresh of the MRUK tracking system to detect externally-enabled keyboard tracking, after app launch.
+        ///     Forces a refresh of the MRUK tracking system to detect externally-enabled keyboard tracking, after app launch.
         /// </summary>
         private IEnumerator RefreshMRUKCoroutine()
         {
             if (MRUK.Instance)
             {
                 MRUK.Instance.enabled = false;
+
                 yield return null;
                 MRUK.Instance.enabled = true;
             }
         }
 
+
         /// <summary>
-        /// Launches an overlay intent with the specified URI.
+        ///     Launches an overlay intent with the specified URI.
         /// </summary>
         /// <param name="dataUri">The URI for the intent.</param>
         private void LaunchOverlayIntent(string dataUri)
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
+            #if UNITY_ANDROID && !UNITY_EDITOR
             try
             {
                 using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
@@ -290,7 +326,7 @@ namespace Meta.XR.TrackedKeyboardSample
             {
                 Debug.LogError($"Failed to launch overlay intent: {e.Message}");
             }
-#endif
+            #endif
         }
     }
 }
