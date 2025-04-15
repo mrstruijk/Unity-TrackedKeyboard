@@ -1,0 +1,4 @@
+repository "Keyboard_360@sosxr@cloud"
+  path "/"
+    br "/main"
+    co "/main"
